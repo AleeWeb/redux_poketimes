@@ -6,7 +6,7 @@ class Post extends Component {
     post: null
   }
   componentDidMount(){
-    let id = this.props.match.params.post_id;
+    let id = this.props.match.params.post_id;  // set route parameter. Can console log to find it in the future
     axios.get('https://jsonplaceholder.typicode.com/posts/' + id)
       .then(res => {
         this.setState({
@@ -16,7 +16,6 @@ class Post extends Component {
       });
   }
   render() {
-
     const post = this.state.post ? (
       <div className="post">
         <h4 className="center">{this.state.post.title}</h4>
