@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import Pokeball from '../pokeball.png'
-import { connect } from 'react-redux'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Pokeball from '../pokeball.png';
 
 class Home extends Component {
+  state = {
+    posts: [] //Store data from API in this empty array.
+  }
+  componentDidMount(){
+    axios.get('https://jsonplaceholder.typicode.com/posts/')
+      .then(res => {
+        console.log(res);
+        this.setState({
+          posts: res.data.slice(0,10)  // Grab data from the API starting from index 0 to the 10th spot.
+        });
+      })
+  }
   render(){
-    const { posts } = this.props
+    const { posts } = this.state
     const postList = posts.length ? (
       posts.map(post => {
         return (
@@ -35,10 +47,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts
-  }
-}
-
-export default connect(mapStateToProps)(Home)
+export default Home
